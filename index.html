@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khloe Grooming</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>ברוכים הבאים ל-Khloe Grooming</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">בית</a></li>
+                <li><a href="#pricing">מחירון</a></li>
+                <li><a href="#gallery">גלריה</a></li>
+                <li><a href="#contact">צור קשר</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>ספר הכלבים הטוב בעיר!</h2>
+        <p>אנחנו מציעים תספורות מקצועיות ואיכותיות לכל סוגי הכלבים.</p>
+    </section>
+
+    <section id="pricing">
+        <h2>מחירון</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>שירות</th>
+                    <th>מחיר</th>
+                </tr>
+            </thead>
+            <tbody id="pricing-table">
+                <!-- ייטען באופן דינמי -->
+            </tbody>
+        </table>
+    </section>
+
+    <section id="gallery">
+        <h2>גלריה</h2>
+        <div class="gallery" id="gallery-container">
+            <!-- ייטען באופן דינמי -->
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>צור קשר</h2>
+        <form action="send_email.php" method="post">
+            <label for="name">שם:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="phone">טלפון:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="message">הודעה:</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">שלח</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>כל הזכויות שמורות &copy; 2024 Khloe Grooming</p>
+    </footer>
+
+    <script>
+        // Load dynamic data from JSON
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                // Update pricing table
+                const pricingTable = document.getElementById('pricing-table');
+                data.pricing.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${item.service}</td><td>${item.price}</td>`;
+                    pricingTable.appendChild(row);
+                });
+
+                // Update gallery
+                const galleryContainer = document.getElementById('gallery-container');
+                data.gallery.forEach(image => {
+                    const img = document.createElement('img');
+                    img.src = image.src;
+                    img.alt = image.alt;
+                    galleryContainer.appendChild(img);
+                });
+            })
+            .catch(error => console.error('Error loading data:', error));
+    </script>
+</body>
+</html>
